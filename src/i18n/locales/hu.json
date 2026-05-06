@@ -1,0 +1,19 @@
+{
+  "auction": {
+    "view_details": "Részletek megtekintése",
+    "category": {
+      "ALL": "Minden",
+      "ELECTRONICS": "Elektronika",
+      "VEHICLE": "Jármű",
+      "COLLECTIBLE": "Gyűjtői darab"
+    },
+    "bidCount": "Licitek száma",
+    "startDateTime": "Licit kezdet",
+    "endDateTime": "Licit vége",
+    "startingPriceHuf": "Kezdő licit ár",
+    "currentPriceHuf": "Jelenlegi licit ár",
+    "placeBid": "Licitálás",
+    "newBid": "Új Licit ára",
+    "countdown": "Hátralévő idő"
+  }
+}

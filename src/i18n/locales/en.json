@@ -1,0 +1,19 @@
+{
+  "auction": {
+    "view_details": "View details",
+    "category": {
+      "ALL": "All",
+      "ELECTRONICS": "Electronics",
+      "VEHICLE": "Vehicle",
+      "COLLECTIBLE": "Collectible"
+    },
+    "bidCount": "Number of Bids",
+    "startDateTime": "Start date",
+    "endDateTime": "Ends at",
+    "startingPriceHuf": "Starts at",
+    "currentPriceHuf": "Current Bid",
+    "placeBid": "Place Bid",
+    "newBid": "New Bid price",
+    "countdown": "Time left"
+  }
+}

@@ -19,7 +19,17 @@ export default function AuctionsPage() {
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    getPageableAuctions(page, 8, category, query)
+    const pageAble = {
+      page,
+      size: 8,
+      enum: {
+        name: "category",
+        value: category,
+      },
+      query,
+      sort: "id,asc",
+    };
+    getPageableAuctions(pageAble)
       .then((response) => {
         setTotalPages(response.totalPages);
         setAuctions(response.content);

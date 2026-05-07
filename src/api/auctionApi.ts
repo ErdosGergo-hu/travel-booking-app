@@ -1,3 +1,4 @@
+import type { User } from "../context/AuthContext";
 import { api } from "./api";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL + "/auction";
 
@@ -8,14 +9,6 @@ export type Category = (typeof categories)[number];
 export const itemStatuses = ["ALL", "NEW", "GOOD", "USED"];
 
 export type ItemStatus = (typeof itemStatuses)[number];
-
-export type User = {
-  id: number;
-  username: string;
-  email: string;
-  createdAt: string;
-  avatarUrl: string;
-};
 
 export type Item = {
   id: number;
@@ -40,22 +33,39 @@ export type Auction = {
 export type Page<T> = {
   totalPages: number;
   content: T[];
-  pageable: unknown;
+  pageable: Pageable;
+};
+
+export type Pageable = {
+  page: number;
+  size: number;
+  sort: string;
+  query?: string;
+  enum?: {
+    name: string;
+    value: string;
+  };
+  customFilters?: Record<string, string>;
 };
 
 export async function getPageableAuctions(
-  page: number,
-  size: number,
-  category: Category,
-  query: string,
+  pageAble: Pageable,
 ): Promise<Page<Auction>> {
   const url = new URL(BASE_URL + "/search");
 
-  url.searchParams.append("page", page.toString());
-  url.searchParams.append("size", size.toString());
-  url.searchParams.append("query", query);
-  if (category !== "ALL") {
-    url.searchParams.append("category", category.toString());
+  url.searchParams.append("page", pageAble.page.toString());
+  url.searchParams.append("size", pageAble.size.toString());
+  url.searchParams.append("query", pageAble.query || "");
+  url.searchParams.append("sort", pageAble.sort);
+
+  if (pageAble.enum && pageAble.enum.value !== "ALL") {
+    url.searchParams.append(pageAble.enum.name, pageAble.enum.value);
+  }
+
+  if (pageAble.customFilters) {
+    Object.entries(pageAble.customFilters).forEach(([key, value]) => {
+      url.searchParams.append(key, value);
+    });
   }
 
   const response = await api.get<Page<Auction>>(url.toString());

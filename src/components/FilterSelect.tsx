@@ -16,10 +16,10 @@ export default function FilterSelect({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`bg-container-background shadow-md shadow-[#262626] border border-[#262626] text-secondary-font text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent hover:border-gray-300 transition-colors cursor-pointer ${className}`}
+      className={`bg-container-background h-10 shadow-md shadow-[#262626] border border-[#262626] text-secondary-font text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent hover:border-gray-300 transition-colors cursor-pointer ${className}`}
     >
       {options.map((opt) => (
-        <option key={opt} value={opt}>
+        <option key={opt} value={opt} className="">
           {t("auction.category." + opt)}
         </option>
       ))}

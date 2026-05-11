@@ -20,7 +20,8 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    console.log("Intercept response error: ", error);
+    console.log("Error status:", error.response?.status);
+    console.log("Error data:", error.response?.data);
     if (error.response?.status === 401 && !originalRequest._retry) {
       console.log("401 or Retry");
       originalRequest._retry = true;
@@ -38,7 +39,7 @@ api.interceptors.response.use(
               refreshToken,
             },
           );
-
+          console.log("Refresh response: ", res);
           localStorage.setItem("accessToken", res.data.accessToken);
           localStorage.setItem("refreshToken", res.data.refreshToken);
         } catch (err) {

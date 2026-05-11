@@ -2,7 +2,7 @@
   "auction": {
     "view_details": "Részletek megtekintése",
     "category": {
-      "ALL": "Minden",
+      "ALL": "",
       "ELECTRONICS": "Elektronika",
       "VEHICLE": "Jármű",
       "COLLECTIBLE": "Gyűjtői darab"

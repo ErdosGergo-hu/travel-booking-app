@@ -2,7 +2,7 @@
   "auction": {
     "view_details": "View details",
     "category": {
-      "ALL": "All",
+      "ALL": "",
       "ELECTRONICS": "Electronics",
       "VEHICLE": "Vehicle",
       "COLLECTIBLE": "Collectible"

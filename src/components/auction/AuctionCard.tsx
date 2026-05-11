@@ -7,8 +7,6 @@ export default function AuctionCard({ auction }: { auction: Auction }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  console.log("Auction: ", auction);
-
   return (
     <div
       key={auction.id}

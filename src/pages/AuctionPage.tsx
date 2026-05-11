@@ -12,12 +12,15 @@ import AuctionBidInfo from "../components/auction/AuctionBidInfo";
 import AuctionBidPlace from "../components/auction/AuctionBidPlace";
 import AuctionSeller from "../components/auction/AuctionSeller";
 import BidHistory from "../components/BidHistory";
+import DialogModal from "../components/DialogModal";
 
 export default function AuctionPage() {
   const { t } = useTranslation();
   const { id } = useParams();
   const [auction, setAuction] = useState<Auction | null>(null);
   const [newBid, setNewBid] = useState<number>(0);
+  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("An error occurred");
 
   const numericId = Number(id);
   const bidPlacingIsDisabled: boolean = auction?.endDateTime
@@ -30,7 +33,11 @@ export default function AuctionPage() {
         setAuction(a);
         setNewBid(a.currentPriceHuf);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error("Error fetching auction:", err.response?.data || err);
+        setErrorMessage("Error fetching auction");
+        setError(true);
+      });
   }, [numericId]);
 
   function handleCreateBid() {
@@ -39,7 +46,11 @@ export default function AuctionPage() {
         setAuction(a);
         setNewBid(a.currentPriceHuf);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error("Error updating auction:", err.response?.data || err);
+        setErrorMessage(err.response?.data.message || "Error updating auction");
+        setError(true);
+      });
   }
 
   return (
@@ -94,7 +105,14 @@ export default function AuctionPage() {
           {auction.id && <BidHistory auction={auction} />}
         </>
       )}
+      <DialogModal
+        open={error}
+        message={errorMessage}
+        onClose={() => {
+          setError(false);
+          setErrorMessage("");
+        }}
+      />
     </>
-    // TODO: SELLER div hozzádsa jobbra, Bids history epdig alá
   );
 }

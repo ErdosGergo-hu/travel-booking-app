@@ -1,6 +1,5 @@
 import { useState } from "react";
-import type { User } from "../api/auctionApi";
-import { AuthContext } from "./AuthContext";
+import { AuthContext, type User } from "./AuthContext";
 import { loginRequest, logoutRequest } from "../api/authApi";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {

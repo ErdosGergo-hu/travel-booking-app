@@ -48,7 +48,7 @@ export function AuctionInfoBar({
 }: AuctionInfoProps) {
   const { days, hours, minutes, seconds, ended } = useCountdown(endDate);
   const urgent = isUrgent(endDate) && !ended;
-  console.log("Bid coint: ", bidCount);
+
   const timeStr = ended
     ? "Lejárt"
     : days > 0

@@ -9,6 +9,7 @@ export async function loginRequest(
     email,
     password,
   });
+  console.log("login resp: ", response);
   localStorage.setItem("accessToken", response.data.accessToken);
   localStorage.setItem("refreshToken", response.data.refreshToken);
 

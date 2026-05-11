@@ -42,55 +42,58 @@ export default function AuctionPage() {
       .catch(console.error);
   }
 
-  console.log(auction);
-
   return (
     <>
-      <div key={auction?.id} className="flex flex-row gap-4">
-        <div className="bg-white w-5xl rounded-xl shadow-md border border-gray-200 overflow-hidden flex flex-3">
-          <div className="flex-1 h-full bg-white flex items-center justify-center p-5">
-            <img
-              src={`/images/${auction?.item.imageUrl}.jpg`}
-              alt={auction?.item.name}
-              className="max-w-full object-cover rounded-2xl bg-gray-100 max-h-100"
-            />
-          </div>
+      {auction && (
+        <>
+          <div key={auction.id} className="flex flex-row gap-4">
+            <div className="bg-container-background w-5xl rounded-xl shadow-md shadow-[#262626] border border-[#262626] overflow-hidden flex flex-3">
+              <div className="flex-1 h-full bg-[#202020] flex items-center justify-center p-5">
+                <img
+                  src={`/images/${auction.item.imageUrl}.png`}
+                  alt={auction.item.name}
+                  className="max-w-full object-cover rounded-2xl max-h-100"
+                />
+              </div>
 
-          <div className="px-8 py-2 flex items-start flex-col flex-1 w-50">
-            <span
-              key={auction?.item.category}
-              className={`bg-blue-100 text-blue-800 border-blue-200 items-center text-xs font-medium px-3 py-1.5 rounded-full border mb-4`}
-            >
-              {auction?.item.category}
-            </span>
+              <div className="px-8 py-2 flex items-start flex-col flex-1 w-50 text-[#8A8A8A]">
+                <span
+                  className={`bg-blue-100 text-blue-800 border-blue-200 items-center text-xs font-medium px-3 py-1.5 rounded-full border mb-4`}
+                >
+                  {auction.item.category}
+                </span>
 
-            <h2 className="text-lg font-semibold mb-2">{auction?.item.name}</h2>
+                <h2 className="text-lg font-semibold mb-2">
+                  {auction.item.name}
+                </h2>
 
-            <p className="text-gray-600 text-sm mb-2">
-              {auction?.item.description}
-            </p>
+                <p className="text-sm pb-2 border-b border-[#2A2A2A]">
+                  {auction.item.description}
+                </p>
 
-            <AuctionBidInfo auction={auction!} />
+                <AuctionBidInfo auction={auction!} />
 
-            <div className="flex gap-4 bg-white border-t border-gray-200 mt-2 mb-2 w-full">
-              <Countdown date={auction?.endDateTime} />
-              <div className="flex-1 h-full px-3 py-1.5 text-xs text-gray-500">
-                <p className="mb-4">{t("auction.endDateTime")}</p>
-                <p>{formatDate(auction?.endDateTime)}</p>
+                <div className="flex gap-4 border-t border-[#2A2A2A] mt-2 mb-2 w-full">
+                  <Countdown date={auction.endDateTime} />
+                  <div className="flex-1 h-full px-3 py-1.5 text-xs">
+                    <p className="mb-4">{t("auction.endDateTime")}</p>
+                    <p>{formatDate(auction.endDateTime)}</p>
+                  </div>
+                </div>
+
+                <AuctionBidPlace
+                  newBid={newBid}
+                  setNewBid={setNewBid}
+                  handleCreateBid={handleCreateBid}
+                  bidPlacingIsDisabled={bidPlacingIsDisabled}
+                />
               </div>
             </div>
-
-            <AuctionBidPlace
-              newBid={newBid}
-              setNewBid={setNewBid}
-              handleCreateBid={handleCreateBid}
-              bidPlacingIsDisabled={bidPlacingIsDisabled}
-            />
+            {auction.seller && <AuctionSeller seller={auction.seller} />}
           </div>
-        </div>
-        {auction?.seller && <AuctionSeller seller={auction.seller} />}
-      </div>
-      {auction?.id && <BidHistory auction={auction} />}
+          {auction.id && <BidHistory auction={auction} />}
+        </>
+      )}
     </>
     // TODO: SELLER div hozzádsa jobbra, Bids history epdig alá
   );

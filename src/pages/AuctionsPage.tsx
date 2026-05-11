@@ -43,7 +43,7 @@ export default function AuctionsPage() {
 
   return (
     <>
-      <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-5">
+      <div className="bg-[#202020] rounded-xl p-4 mb-5 mx-4">
         <div className="flex flex-wrap gap-2 items-center">
           <div className="relative flex-1 min-w-45">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
@@ -54,7 +54,9 @@ export default function AuctionsPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Keresés termékek közt..."
-              className="w-full pl-9 pr-3 py-2 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent hover:border-gray-300 transition-colors placeholder-gray-400"
+              className="w-full pl-9 pr-3 py-2 text-sm text-secondary-font bg-container-background shadow-md shadow-[#262626] border border-[#262626] rounded-lg
+              focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent 
+              hover:border-gray-300 transition-colors placeholder-secondary-font"
             />
           </div>
           <FilterSelect

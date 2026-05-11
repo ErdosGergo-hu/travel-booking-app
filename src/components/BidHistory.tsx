@@ -20,47 +20,47 @@ export default function BidHistory({ auction }: { auction: Auction }) {
   }, [auction]);
 
   return (
-    <div className="w-full max-w-xl font-sans mt-5">
-      <div className="flex items-center justify-between mb-4">
+    <div className="w-full rounded-xl max-w-xl font-sans mt-5 bg-container-background shadow-[#262626] border border-[#262626] overflow-hidden text-[#8A8A8A]">
+      <div className="flex items-center justify-between p-4">
         <div>
-          <h3 className="text-xl font-bold text-gray-900">Bid history</h3>
+          <h3 className="text-xl font-bold">Bid history</h3>
         </div>
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-gray-100 overflow-hidden">
+      <div>
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              <th className="text-left text-xs font-medium text-gray-400 px-4 py-3 uppercase tracking-wider">
+            <tr>
+              <th className="text-left text-xs font-medium px-4 py-3 uppercase tracking-wider">
                 Bidder
               </th>
-              <th className="text-right text-xs font-medium text-gray-400 px-4 py-3 uppercase tracking-wider">
+              <th className="text-right text-xs font-medium px-4 py-3 uppercase tracking-wider">
                 Amount
               </th>
-              <th className="text-right text-xs font-medium text-gray-400 px-4 py-3 uppercase tracking-wider">
+              <th className="text-right text-xs font-medium px-4 py-3 uppercase tracking-wider">
                 Time
               </th>
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-50 bg-white">
+          <tbody className="divide-y divide-[#262626]">
             {visibleBids.map((bid) => (
               <tr
                 key={bid.id}
-                className="transition-colors bg-emerald-50/60 border-b border-gray-200"
+                className="transition-colors border-b border-[#262626]"
               >
                 {/* Bidder */}
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="rounded-full overflow-hidden bg-gray-300 flex items-center justify-center">
+                    <div className="rounded-full overflow-hidden flex items-center justify-center">
                       <img
                         src={`/images/${bid.bidder.avatarUrl}.jpg`}
                         alt={bid.bidder.username}
                         className="w-10 h-10 object-cover"
                       />
                     </div>
-                    <span className="font-medium truncate max-w-32.5 text-gray-900">
+                    <span className="font-medium truncate max-w-32.5">
                       {bid.bidder.username}
                     </span>
                   </div>
@@ -68,14 +68,14 @@ export default function BidHistory({ auction }: { auction: Auction }) {
 
                 {/* Amount */}
                 <td className="px-4 py-3 text-right">
-                  <span className="font-semibold tabular-nums text-gray-800">
+                  <span className="font-semibold tabular-nums">
                     {formatAmount(bid.amountHuf, "HUF")}
                   </span>
                 </td>
 
                 {/* Time */}
                 <td className="px-4 py-3 text-right">
-                  <span className="font-semibold text-gray-800 tabular-nums">
+                  <span className="font-semibold tabular-nums">
                     {timeAgo(new Date(bid.createdAt))}
                   </span>
                 </td>

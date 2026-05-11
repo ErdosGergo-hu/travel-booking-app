@@ -16,7 +16,7 @@ export default function DashboardUserList() {
   }, []);
 
   return (
-    <div className="bg-[#181818] rounded-xl p-6 overflow-x-auto">
+    <div className="bg-container-background rounded-xl p-6 overflow-x-auto">
       <p className="text-sm font-medium text-[#F5F5F5] tracking-wide">
         Most Popular Sellers
       </p>
@@ -42,7 +42,7 @@ export default function DashboardUserList() {
               {/* Finished Auctions */}
               <td className="py-3 text-right">
                 <div className="flex flex-col font-medium">
-                  <span>{formatAmount(2954, "")}</span>
+                  <span>{user.finishedAuctions}</span>
                   <span className="text-[#8A8A8A]">Deliveries</span>
                 </div>
               </td>

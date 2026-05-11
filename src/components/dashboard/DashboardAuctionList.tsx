@@ -38,9 +38,9 @@ export default function DashboardAuctionList() {
   }
 
   return (
-    <div className="bg-[#181818] rounded-xl p-6 overflow-x-auto">
+    <div className="bg-container-background rounded-xl p-6 overflow-x-auto">
       <p className="text-sm font-medium text-[#F5F5F5] tracking-wide">
-        Dashboard Auctions - Ending Soon
+        Active Auctions
       </p>
 
       {/* Table */}
@@ -89,11 +89,20 @@ export default function DashboardAuctionList() {
                 </span>
               </td>
 
-              {/* Current Bid */}
-              <td className="px-4 py-3 text-right">
-                <span className="font-medium tabular-nums">
-                  {formatAmount(auction.currentPriceHuf, "HUF")}
-                </span>
+              {/* Recent Bid */}
+              <td className="px-4 py-3">
+                <div className="flex items-center gap-2.5 justify-end">
+                  <div className="rounded-lg overflow-hidden">
+                    <img
+                      src={`/images/${auction.seller.avatarUrl}.jpg`}
+                      alt={auction.seller.username}
+                      className="w-10 h-10 object-cover"
+                    />
+                  </div>
+                  <span className="font-medium tabular-nums">
+                    {formatAmount(auction.currentPriceHuf, "HUF")}
+                  </span>
+                </div>
               </td>
 
               {/* Time Left */}

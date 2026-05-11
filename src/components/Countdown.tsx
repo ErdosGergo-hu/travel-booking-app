@@ -38,7 +38,7 @@ export default function Countdown({ date }: { date: string | undefined }) {
 
   return (
     <div className="flex-1 px-3 py-1.5">
-      <p className="mb-2 text-xs text-gray-500">{t("auction.countdown")}</p>
+      <p className="mb-2 text-xs">{t("auction.countdown")}</p>
 
       <div className="flex items-start gap-2">
         <TimeBlock value={pad(days)} label="DAYS" />
@@ -56,16 +56,12 @@ export default function Countdown({ date }: { date: string | undefined }) {
 function TimeBlock({ value, label }: { value: string; label: string }) {
   return (
     <div className="text-center">
-      <div className="text-xl font-bold tracking-wide text-slate-900">
-        {value}
-      </div>
-      <div className="mt-1 text-[10px] font-semibold uppercase text-gray-500">
-        {label}
-      </div>
+      <div className="text-xl font-bold tracking-wide">{value}</div>
+      <div className="mt-1 text-[10px] font-semibold uppercase">{label}</div>
     </div>
   );
 }
 
 function Separator() {
-  return <div className="text-xl font-bold text-slate-900">:</div>;
+  return <div className="text-xl font-bold">:</div>;
 }

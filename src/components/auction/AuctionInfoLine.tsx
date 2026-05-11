@@ -48,7 +48,7 @@ export function AuctionInfoBar({
 }: AuctionInfoProps) {
   const { days, hours, minutes, seconds, ended } = useCountdown(endDate);
   const urgent = isUrgent(endDate) && !ended;
-
+  console.log("Bid coint: ", bidCount);
   const timeStr = ended
     ? "Lejárt"
     : days > 0
@@ -56,29 +56,27 @@ export function AuctionInfoBar({
       : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 
   return (
-    <div className="flex items-center justify-between gap-4 bg-white border border-gray-200 rounded-lg px-4 py-3 w-full">
-      <div className="flex items-center gap-2">
+    <div className="flex items-center justify-between gap-4 bg-[#202020] shadow-2xl rounded-lg px-4 py-3 w-full">
+      <div className="flex items-center gap-2 text-secondary-font">
         <GavelIcon />
         <div>
-          <p className="text-[11px] text-gray-400 uppercase tracking-wider leading-none mb-0.5">
+          <p className="text-[11px] uppercase tracking-wider leading-none mb-0.5">
             Licit
           </p>
-          <p className="text-base font-bold text-gray-900 tabular-nums leading-none">
+          <p className="text-base font-bold tabular-nums leading-none">
             {currentBid.toLocaleString()}{" "}
-            <span className="text-sm font-medium text-gray-400">
-              {currency}
-            </span>
+            <span className="text-sm font-medium">{currency}</span>
           </p>
         </div>
         {bidCount !== undefined && (
-          <span className="text-xs text-gray-400 border-l border-gray-100 pl-3 ml-1">
+          <span className="text-xs border-l border-gray-100 pl-3 ml-1">
             {bidCount}×
           </span>
         )}
       </div>
 
       <div
-        className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${ended ? "bg-gray-50" : urgent ? "bg-red-50" : "bg-amber-50"}`}
+        className={`flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#2A2A2A] `}
       >
         <ClockIcon
           size={13}
@@ -87,7 +85,7 @@ export function AuctionInfoBar({
           }
         />
         <span
-          className={`text-sm font-semibold tabular-nums ${ended ? "text-gray-400" : urgent ? "text-red-600" : "text-amber-700"}`}
+          className={`text-sm font-semibold tabular-nums ${ended ? "text-secondary-font" : urgent ? "text-red-400" : "text-amber-500"}`}
         >
           {timeStr}
         </span>

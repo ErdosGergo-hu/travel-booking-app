@@ -1,19 +1,38 @@
 import { api } from "../api/api";
 import type { User } from "../context/AuthContext";
 
+export type ResponseData = {
+  accessToken: string;
+  refreshToken: string;
+  user: User;
+  expiresIn: number;
+  tokenType: string;
+};
+
+export async function registerRequest(
+  username: string,
+  email: string,
+  password: string,
+): Promise<ResponseData> {
+  const response = await api.post("/auth/register", {
+    username,
+    email,
+    password,
+  });
+
+  return response.data;
+}
+
 export async function loginRequest(
   email: string,
   password: string,
-): Promise<User> {
+): Promise<ResponseData> {
   const response = await api.post("/auth/login", {
     email,
     password,
   });
-  console.log("login resp: ", response);
-  localStorage.setItem("accessToken", response.data.accessToken);
-  localStorage.setItem("refreshToken", response.data.refreshToken);
 
-  return response.data.user;
+  return response.data;
 }
 
 export async function logoutRequest() {

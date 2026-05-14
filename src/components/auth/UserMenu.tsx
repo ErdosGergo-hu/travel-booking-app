@@ -4,6 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import LoginIcon from "../../icons/LoginIcon";
 import { useNavigate } from "react-router-dom";
 import { useClickOutside } from "../../hooks/useClickOutside";
+import RegisterIcon from "../../icons/RegisterIcon";
 
 export default function UserMenu() {
   const [open, setOpen] = useState(false);
@@ -28,6 +29,10 @@ export default function UserMenu() {
     }
     navigate("/login");
     setOpen(false);
+  }
+
+  function onNavigateToRegister(): void {
+    navigate("/register");
   }
 
   return (
@@ -59,6 +64,17 @@ export default function UserMenu() {
             {actionIcon}
             <span>{actionText}</span>
           </button>
+          {!user && (
+            <button
+              key="register"
+              role="option"
+              onClick={onNavigateToRegister}
+              className="w-full flex items-center gap-3 px-3 py-2.5 text-sm transition-colors duration-100 text-gray-700 hover:bg-gray-50"
+            >
+              <RegisterIcon />
+              <span>Register</span>
+            </button>
+          )}
         </div>
       )}
     </div>

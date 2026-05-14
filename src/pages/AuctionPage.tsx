@@ -13,10 +13,12 @@ import AuctionBidPlace from "../components/auction/AuctionBidPlace";
 import AuctionSeller from "../components/auction/AuctionSeller";
 import BidHistory from "../components/BidHistory";
 import DialogModal from "../components/DialogModal";
+import { useAuth } from "../hooks/useAuth";
 
 export default function AuctionPage() {
   const { t } = useTranslation();
   const { id } = useParams();
+  const { user } = useAuth();
   const [auction, setAuction] = useState<Auction | null>(null);
   const [newBid, setNewBid] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
@@ -41,7 +43,7 @@ export default function AuctionPage() {
   }, [numericId]);
 
   function handleCreateBid() {
-    updateActionByBid(auction!.id, newBid)
+    updateActionByBid(auction!.id, newBid, user!.id)
       .then((a) => {
         setAuction(a);
         setNewBid(a.currentPriceHuf);

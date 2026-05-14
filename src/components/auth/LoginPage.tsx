@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import AuthInputWithLabel from "./AuthInputWithLabel";
+import AuthFormTitle from "./AuthFormTitle";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -22,72 +24,38 @@ export default function LoginPage() {
   return (
     <>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <div className="mx-auto h-15 w-15">
-            <img src="/images/batman.jpg" alt="main logo" />
-          </div>
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-700">
-            Sign in to your account
-          </h2>
-        </div>
+        <AuthFormTitle title="Sign in to your account" />
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleLogin} className="space-y-6">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm/6 font-medium text-gray-700"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  type="email"
-                  required
-                  autoComplete="email"
-                  className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm/6 font-medium text-gray-700"
-                >
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-gray-700 hover:text-gray-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </div>
+            <AuthInputWithLabel
+              label="Email address"
+              type="email"
+              inputValue={email}
+              onInputChange={setEmail}
+            />
+            <AuthInputWithLabel
+              label="Password"
+              type="password"
+              inputValue={password}
+              onInputChange={setPassword}
+            />
 
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-gray-700 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                className="flex w-full justify-center rounded-md bg-gold hover:bg-gold-hover px-3 py-1.5 text-md font-semibold text-background focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Sign in
               </button>
+              <div className="text-sm mt-2">
+                <a
+                  href="#"
+                  className="font-semibold text-secondary-font hover:text-gray-500"
+                >
+                  Forgot password?
+                </a>
+              </div>
             </div>
           </form>
         </div>

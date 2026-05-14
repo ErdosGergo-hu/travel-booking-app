@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { AuthContext, type User } from "./AuthContext";
-import { loginRequest, logoutRequest } from "../api/authApi";
+import {
+  loginRequest,
+  logoutRequest,
+  registerRequest,
+  type ResponseData,
+} from "../api/authApi";
 import { api } from "../api/api";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -10,6 +15,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const fetchMe = async () => {
     const response = await api.get<User>("/auth/me");
     setUser(response.data);
+  };
+
+  const setAuthInfo = (data: ResponseData) => {
+    localStorage.setItem("accessToken", data.accessToken);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    setUser(data.user);
   };
 
   useEffect(() => {
@@ -26,10 +37,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     initAuth();
   }, [token, user]);
 
+  async function register(
+    username: string,
+    email: string,
+    password: string,
+  ): Promise<void> {
+    try {
+      const data: ResponseData = await registerRequest(
+        username,
+        email,
+        password,
+      );
+      setAuthInfo(data);
+    } catch (error) {
+      console.error("Registration failed: ", error);
+    }
+  }
+
   async function login(email: string, password: string): Promise<void> {
     try {
-      const response = await loginRequest(email, password);
-      setUser(response);
+      const data: ResponseData = await loginRequest(email, password);
+      setAuthInfo(data);
     } catch (error) {
       console.error("Login failed: ", error);
     }
@@ -46,7 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

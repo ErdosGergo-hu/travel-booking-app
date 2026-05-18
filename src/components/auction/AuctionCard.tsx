@@ -2,10 +2,36 @@ import { useTranslation } from "react-i18next";
 import type { Auction } from "../../api/auctionApi";
 import { AuctionInfoBar } from "./AuctionInfoLine";
 import { useNavigate } from "react-router-dom";
+import type { User } from "../../context/AuthContext";
+import { toggleFavorite } from "../../api/favoriteApi";
+import { Heart } from "lucide-react";
+import { useState } from "react";
 
-export default function AuctionCard({ auction }: { auction: Auction }) {
+export default function AuctionCard({
+  auction,
+  user,
+}: {
+  auction: Auction;
+  user: User | null;
+}) {
   const { t } = useTranslation();
+  const [favorited, setFavorited] = useState<boolean>(auction.isFavorite);
   const navigate = useNavigate();
+
+  function handleToggleFavorite() {
+    if (user) {
+      toggleFavorite(user.id, auction.id)
+        .then((response) => {
+          setFavorited(response.favorite);
+        })
+        .catch((error) => {
+          console.error(
+            "Error toggling favorite: ",
+            error.response?.data || error,
+          );
+        });
+    }
+  }
 
   return (
     <div
@@ -30,12 +56,28 @@ export default function AuctionCard({ auction }: { auction: Auction }) {
           bidCount={auction.bidCount}
         />
 
-        <button
-          onClick={() => navigate(`/auction/${auction.id}`)}
-          className="mt-4 w-full font-semibold py-2 rounded-xl text-container-background transition bg-[#C6A85B] hover:bg-[#D4B46A]"
-        >
-          {t("auction.view_details")}
-        </button>
+        <div className="flex w-full mt-4 gap-2">
+          {auction.seller.id !== user?.id && (
+            <button
+              onClick={handleToggleFavorite}
+              className="flex-1 inline-flex items-center justify-center rounded-lg bg-[#202020] border border-[#262626] hover:bg-[#2A2A2A] transition-colors"
+            >
+              <Heart
+                className={
+                  favorited ? "fill-gold stroke-gold" : "fill-none stroke-gold"
+                }
+              />
+            </button>
+          )}
+          <button
+            onClick={() => navigate(`/auction/${auction.id}`)}
+            className="flex-5 font-semibold py-2 rounded-lg text-container-background transition bg-[#C6A85B] hover:bg-[#D4B46A]"
+          >
+            {auction.seller.id === user?.id
+              ? t("auction.viewDetails")
+              : t("auction.placeBid")}
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -92,3 +92,9 @@ export async function updateActionByBid(
 
   return response.data;
 }
+
+export async function getWonAuctionByCurrentUser(): Promise<Auction[]> {
+  const response = await api.get<Auction[]>(BASE_URL + "/me/won");
+
+  return response.data;
+}

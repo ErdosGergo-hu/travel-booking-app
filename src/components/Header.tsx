@@ -1,14 +1,21 @@
 import { NavLink } from "react-router-dom";
 import LanguageSelector from "./LanguageSelector";
 import UserMenu from "./auth/UserMenu";
+import { useAuth } from "../hooks/useAuth";
+import type { User } from "../context/AuthContext";
 
 const AVAIBLE_NAV_LINKS = [
   { name: "Dashboard", path: "/" },
   { name: "Auctions", path: "/auctions" },
-  { name: "My Profile", path: "/profile" },
+  {
+    name: "My Profile",
+    path: "/profile",
+    visible: (user: User | null) => !!user,
+  },
 ];
 
 export default function Header() {
+  const { user } = useAuth();
   const navClass = ({ isActive }: { isActive: boolean }) => {
     return `border-b-2 text-secondary-font ${isActive ? "border-gold" : "border-b-transparent"} transition`;
   };
@@ -19,7 +26,9 @@ export default function Header() {
         <img src="/images/barca.png" alt="main logo" />
       </div>
       <nav className="absolute left-1/2 -translate-x-1/2 flex items-center gap-10">
-        {AVAIBLE_NAV_LINKS.map((link) => (
+        {AVAIBLE_NAV_LINKS.filter(
+          (link) => !link.visible || link.visible(user),
+        ).map((link) => (
           <NavLink
             key={link.path}
             to={link.path}

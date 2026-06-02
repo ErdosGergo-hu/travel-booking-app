@@ -3,11 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 import { formatDate } from "../utils/date";
 import { getUserProfileStat } from "../api/userApi";
 import { formatAmount } from "../utils/number";
-import {
-  getActiveBidsByUserId,
-  getWonBidsByUserId,
-  type Bid,
-} from "../api/bidApi";
+import { getWonAuctionByCurrentUser, type Auction } from "../api/auctionApi";
 
 type Tab = "bids" | "won" | "favourites";
 
@@ -25,7 +21,7 @@ const initialUserStat: UserProfileStat = {
   spent: 0,
 };
 
-const FAVOURITES: Bid[] = [];
+const FAVOURITES: Auction[] = [];
 
 // function StatusBadge({ status }: { status: Bid["status"] }) {
 //   const map = {
@@ -45,30 +41,30 @@ const FAVOURITES: Bid[] = [];
 
 // ── Auction row ───────────────────────────────────────────────────────────────
 
-function AuctionRow({ bid }: { bid: Bid }) {
+function AuctionRow({ auction }: { auction: Auction }) {
   return (
     <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/6 bg-white/3 hover:bg-white/6 transition-colors">
       <div className="rounded-lg overflow-hidden bg-gray-300 flex items-center justify-center">
         <img
-          src={`/images/${bid.auction.item.imageUrl}.jpg`}
-          alt={bid.auction.item.name}
+          src={`/images/${auction.item.imageUrl}.jpg`}
+          alt={auction.item.name}
           className="w-10 h-10 object-contain bg-white"
         />
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-white truncate">
-          {bid.auction.item.name}
+          {auction.item.name}
         </p>
         <p className="text-xs text-white/40">
-          {formatAmount(bid.amountHuf, "HUF")} Ft
-          {bid.auction.endDateTime && (
+          {formatAmount(auction.currentPriceHuf, "HUF")} Ft
+          {auction.endDateTime && (
             <span className="ml-2">
-              · ends in {formatDate(bid.auction.endDateTime)}
+              · ends in {formatDate(auction.endDateTime)}
             </span>
           )}
         </p>
       </div>
-      {/* <StatusBadge status={bid.auction.status} /> */}
+      {/* <StatusBadge status={auction.status} /> */}
     </div>
   );
 }
@@ -92,13 +88,12 @@ export default function ProfilePage() {
   const { user } = useAuth();
   const [userStat, setUserStat] = useState<UserProfileStat>(initialUserStat);
   const [tab, setTab] = useState<Tab>("bids");
-  const [activeBids, setActiveBids] = useState<Bid[]>([]);
-  const [wonBids, setWonBids] = useState<Bid[]>([]);
-  const [favourite, setFavourite] = useState<Bid[]>([]);
+  const [activeAuctions, setActiveAuctions] = useState<Auction[]>([]);
+  const [wonAuctions, setWonAuctions] = useState<Auction[]>([]);
 
-  const tabData: Record<Tab, Bid[]> = {
-    bids: activeBids,
-    won: wonBids,
+  const tabData: Record<Tab, Auction[]> = {
+    bids: activeAuctions,
+    won: wonAuctions,
     favourites: FAVOURITES,
   };
 
@@ -109,24 +104,18 @@ export default function ProfilePage() {
           setUserStat(response);
         })
         .catch(console.error);
-      getActiveBidsByUserId(user.id)
+      getWonAuctionByCurrentUser()
         .then((response) => {
-          console.log("Bid response: ", response);
-          setActiveBids(response);
-        })
-        .catch(console.error);
-      getWonBidsByUserId(user.id)
-        .then((response) => {
-          console.log("Won bids: ", response);
-          setWonBids(response);
+          console.log(response);
+          setWonAuctions(response);
         })
         .catch(console.error);
     }
   }, [user]);
 
   const tabs: { key: Tab; label: string; count: number }[] = [
-    { key: "bids", label: "Active bids", count: activeBids.length },
-    { key: "won", label: "Won", count: wonBids.length },
+    { key: "bids", label: "Active bids", count: activeAuctions.length },
+    { key: "won", label: "Won", count: wonAuctions.length },
     { key: "favourites", label: "Favourites", count: FAVOURITES.length },
   ];
 
@@ -202,8 +191,8 @@ export default function ProfilePage() {
           </div>
 
           <div className="p-6 flex flex-col gap-2.5">
-            {tabData[tab].map((bid) => (
-              <AuctionRow key={bid.id} bid={bid} />
+            {tabData[tab].map((auction) => (
+              <AuctionRow key={auction.id} auction={auction} />
             ))}
           </div>
         </div>

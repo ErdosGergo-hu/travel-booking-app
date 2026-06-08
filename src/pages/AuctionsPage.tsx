@@ -9,6 +9,7 @@ import FilterSelect from "../components/FilterSelect";
 import Pagination from "../components/Pagination";
 import AuctionList from "../components/auction/AuctionList";
 import SearchIcon from "../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 export default function AuctionsPage() {
   const [auctions, setAuctions] = useState<Auction[]>([]);
@@ -17,6 +18,7 @@ export default function AuctionsPage() {
   const [itemStatus, setItemStatus] = useState(itemStatuses[0]);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const pageAble = {
@@ -53,7 +55,7 @@ export default function AuctionsPage() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Keresés termékek közt..."
+              placeholder={t("auction.search.placeholder")}
               className="w-full pl-9 pr-3 py-2 text-sm text-secondary-font bg-container-background shadow-md shadow-[#262626] border border-[#262626] rounded-lg
               focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent 
               hover:border-gold transition-colors placeholder-secondary-font"

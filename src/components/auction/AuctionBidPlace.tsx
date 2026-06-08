@@ -22,14 +22,12 @@ export default function AuctionBidPlace({
             value={newBid}
             onChange={(e) => setNewBid(Number(e.target.value))}
             disabled={bidPlacingIsDisabled}
-            placeholder="Keresés termékek közt..."
             className="w-full border border-[#2A2A2A] rounded-sm px-2 py-2 pr-14 
                focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-100 disabled:cursor-not-allowed disabled:border-gray-200 disabled:text-gray-400"
           />
 
           <span className="absolute right-2 top-1/2 -translate-y-1/2">FT</span>
         </div>
-        {/* TODO: Az input végére FT betevése */}
         <button
           onClick={handleCreateBid}
           disabled={bidPlacingIsDisabled}

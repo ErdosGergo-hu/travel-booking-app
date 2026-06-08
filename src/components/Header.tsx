@@ -3,12 +3,13 @@ import LanguageSelector from "./LanguageSelector";
 import UserMenu from "./auth/UserMenu";
 import { useAuth } from "../hooks/useAuth";
 import type { User } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const AVAIBLE_NAV_LINKS = [
-  { name: "Dashboard", path: "/" },
-  { name: "Auctions", path: "/auctions" },
+  { name: "dashboard", path: "/" },
+  { name: "auctions", path: "/auctions" },
   {
-    name: "My Profile",
+    name: "profile",
     path: "/profile",
     visible: (user: User | null) => !!user,
   },
@@ -16,6 +17,7 @@ const AVAIBLE_NAV_LINKS = [
 
 export default function Header() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const navClass = ({ isActive }: { isActive: boolean }) => {
     return `border-b-2 text-secondary-font ${isActive ? "border-gold" : "border-b-transparent"} transition`;
   };
@@ -34,7 +36,7 @@ export default function Header() {
             to={link.path}
             className={({ isActive }) => navClass({ isActive })}
           >
-            {link.name}
+            {t(`header.${link.name}`)}
           </NavLink>
         ))}
       </nav>

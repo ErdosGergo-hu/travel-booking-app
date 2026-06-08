@@ -5,18 +5,20 @@ import { formatAmount } from "../../utils/number";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 import { useNavigate } from "react-router-dom";
 import EmptyTableRow from "../EmptyTableRow";
+import { useTranslation } from "react-i18next";
 
 const TABLE_HEAD = [
-  { name: "Item", className: "text-left" },
-  { name: "Start Bid", className: "text-right" },
-  { name: "Recent Bid", className: "text-right" },
-  { name: "Time Left", className: "text-right" },
-  { name: "View", className: "text-right" },
+  { name: "item", className: "text-left" },
+  { name: "startBid", className: "text-right" },
+  { name: "recentBid", className: "text-right" },
+  { name: "timeLeft", className: "text-right" },
+  { name: "viewDetails", className: "text-right" },
 ];
 
 export default function DashboardAuctionList() {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const pageable = {
@@ -41,7 +43,7 @@ export default function DashboardAuctionList() {
   return (
     <div className="bg-container-background rounded-xl p-6 overflow-x-auto">
       <p className="text-sm font-medium text-[#F5F5F5] tracking-wide">
-        Active Auctions
+        {t("auction.active")}
       </p>
 
       {/* Table */}
@@ -53,7 +55,7 @@ export default function DashboardAuctionList() {
                 key={head.name}
                 className={`${head.className} text-xs font-medium text-[#8A8A8A] px-4 py-3 uppercase tracking-wider`}
               >
-                {head.name}
+                {t(`dashboard.${head.name}`)}
               </th>
             ))}
           </tr>
@@ -73,7 +75,7 @@ export default function DashboardAuctionList() {
                   <div className="flex items-center gap-2.5 w-full">
                     <div className="rounded-lg overflow-hidden bg-gray-300 flex items-center justify-center">
                       <img
-                        src={`/images/${auction.item.imageUrl}.jpg`}
+                        src={`/images/${auction.item.imageUrl}.png`}
                         alt={auction.item.name}
                         className="w-10 h-10 object-contain bg-white"
                       />
@@ -83,7 +85,7 @@ export default function DashboardAuctionList() {
                         {auction.item.name}
                       </span>
                       <span className="font-light truncate">
-                        {`by ${auction.seller.username}`}
+                        {`${t("by")} ${auction.seller.username}`}
                       </span>
                     </div>
                   </div>
@@ -101,8 +103,12 @@ export default function DashboardAuctionList() {
                   <div className="flex items-center gap-2.5 justify-end">
                     <div className="rounded-lg overflow-hidden">
                       <img
-                        src={`/images/${auction.seller.avatarUrl}.jpg`}
-                        alt={auction.seller.username}
+                        src={`/images/${auction.bidder ? auction.bidder.avatarUrl : auction.seller.avatarUrl}.jpg`}
+                        alt={
+                          auction.bidder
+                            ? auction.bidder.username
+                            : auction.seller.username
+                        }
                         className="w-10 h-10 object-cover"
                       />
                     </div>

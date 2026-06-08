@@ -26,7 +26,7 @@ export default function AuctionCard({
         })
         .catch((error) => {
           console.error(
-            "Error toggling favorite: ",
+            t("favorite.error.toggle"),
             error.response?.data || error,
           );
         });

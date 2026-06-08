@@ -1,4 +1,27 @@
 {
+  "header": {
+    "dashboard": "Kezdőlap",
+    "auctions": "Aukciók",
+    "profile": "Profilom"
+  },
+  "by": "Készítette",
+  "countdown": {
+    "days": "NAP",
+    "hours": "ÓRA",
+    "minutes": "PERC",
+    "seconds": "MPERC"
+  },
+  "timeAgo": {
+    "seconds": " másodperce",
+    "minutes": " perce",
+    "hours": " órája"
+  },
+  "bid": {
+    "history": "Licit előzmények",
+    "bidder": "Licitáló",
+    "amount": "Licit összege",
+    "time": "Licit ideje"
+  },
   "auction": {
     "viewDetails": "Részletek megtekintése",
     "category": {
@@ -7,6 +30,8 @@
       "VEHICLE": "Jármű",
       "COLLECTIBLE": "Gyűjtői darab"
     },
+    "active": "Aktív aukciók",
+    "bid": "Licit",
     "bidCount": "Licitek száma",
     "startDateTime": "Licit kezdet",
     "endDateTime": "Licit vége",
@@ -14,6 +39,46 @@
     "currentPriceHuf": "Jelenlegi licit ár",
     "placeBid": "Licitálás",
     "newBid": "Új Licit ára",
-    "countdown": "Hátralévő idő"
+    "ended": "Lejárt",
+    "endsIn": "Hátralévő idő",
+    "countdown": "Hátralévő idő",
+    "error": {
+      "fetch": "Hiba az aukciók lekérésekor",
+      "update": "Hiba az aukció frissítésekor"
+    },
+    "search": {
+      "placeholder": "Keresés termékek közt..."
+    },
+    "emptyRow": "Nem található aukció.",
+    "username": "Felhasználónév",
+    "email": "Email",
+    "seller": "Eladó"
+  },
+  "dashboard": {
+    "item": "Tárgy",
+    "startBid": "Kezdő licit",
+    "recentBid": "Legutóbbi licit",
+    "timeLeft": "Hátralévő idő",
+    "viewDetails": "Részletek megtekintése",
+    "mostPopularSellers": "Legnépszerűbb eladó",
+    "deliveries": "Szállítások",
+    "ongoing": "Folyamatban",
+    "earnings": "Bevétel"
+  },
+  "favorite": {
+    "error": {
+      "toggle": "Hiba a kedvencek frissítésekor"
+    }
+  },
+  "user": {
+    "verified": "Ellenőrzött",
+    "joined": "Csatlakozott",
+    "activeAuctions": "Aktív aukciók",
+    "activeListings": "Aktív aukciók",
+    "finishedAuctions": "Lezárt aukciók",
+    "won": "Megnyert aukciók",
+    "favorites": "Kedvencek",
+    "totalSpent": "Összesen költött",
+    "totalEarnings": "Összesen keresett"
   }
 }

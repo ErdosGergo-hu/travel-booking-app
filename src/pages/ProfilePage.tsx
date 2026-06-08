@@ -3,9 +3,17 @@ import { useAuth } from "../hooks/useAuth";
 import { formatDate } from "../utils/date";
 import { getUserProfileStat } from "../api/userApi";
 import { formatAmount } from "../utils/number";
-import { getWonAuctionByCurrentUser, type Auction } from "../api/auctionApi";
+import {
+  getActiveAuctionByCurrentUser,
+  getFavouriteAuctionsByCurrentUser,
+  getWonAuctionByCurrentUser,
+  type Auction,
+} from "../api/auctionApi";
+import type { User } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 
-type Tab = "bids" | "won" | "favourites";
+type Tab = "active" | "won" | "favourites";
 
 type UserProfileStat = {
   finishedAuctions: number;
@@ -21,32 +29,53 @@ const initialUserStat: UserProfileStat = {
   spent: 0,
 };
 
-const FAVOURITES: Auction[] = [];
+function StatusBadge({ status }: { status: string }) {
+  const map: Record<string, string> = {
+    winning: "text-emerald-400 bg-emerald-400/10",
+    outbid: "text-red-400    bg-red-400/10",
+    won: "text-gold  bg-gold/10",
+  };
+  const labels: Record<string, string> = {
+    winning: "Winning",
+    outbid: "Outbid",
+    won: "Won",
+  };
+  return (
+    <span
+      className={`text-[11px] font-medium px-2.5 py-1 rounded-full ${map[status]}`}
+    >
+      {labels[status]}
+    </span>
+  );
+}
 
-// function StatusBadge({ status }: { status: Bid["status"] }) {
-//   const map = {
-//     winning: "text-emerald-400 bg-emerald-400/10",
-//     outbid: "text-red-400    bg-red-400/10",
-//     won: "text-gold  bg-gold/10",
-//   };
-//   const labels = { winning: "Winning", outbid: "Outbid", won: "Won" };
-//   return (
-//     <span
-//       className={`text-[11px] font-medium px-2.5 py-1 rounded-full ${map[status]}`}
-//     >
-//       {labels[status]}
-//     </span>
-//   );
-// }
+function getStatusByTab(auction: Auction, tab: Tab, user: User): string {
+  switch (tab) {
+    case "active":
+      return auction.bidder?.id === user.id ? "winning" : "outbid";
+    case "won":
+      return "won";
+    case "favourites":
+      return auction.bidder?.id === user.id ? "winning" : "outbid";
+  }
+}
 
-// ── Auction row ───────────────────────────────────────────────────────────────
-
-function AuctionRow({ auction }: { auction: Auction }) {
+function AuctionRow({
+  auction,
+  tab,
+  user,
+  t,
+}: {
+  auction: Auction;
+  tab: Tab;
+  user: User;
+  t: TFunction;
+}) {
   return (
     <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/6 bg-white/3 hover:bg-white/6 transition-colors">
       <div className="rounded-lg overflow-hidden bg-gray-300 flex items-center justify-center">
         <img
-          src={`/images/${auction.item.imageUrl}.jpg`}
+          src={`/images/${auction.item.imageUrl}.png`}
           alt={auction.item.name}
           className="w-10 h-10 object-contain bg-white"
         />
@@ -59,17 +88,15 @@ function AuctionRow({ auction }: { auction: Auction }) {
           {formatAmount(auction.currentPriceHuf, "HUF")} Ft
           {auction.endDateTime && (
             <span className="ml-2">
-              · ends in {formatDate(auction.endDateTime)}
+              · {t("auction.endsIn")} {formatDate(auction.endDateTime)}
             </span>
           )}
         </p>
       </div>
-      {/* <StatusBadge status={auction.status} /> */}
+      <StatusBadge status={getStatusByTab(auction, tab, user)} />
     </div>
   );
 }
-
-// ── Stat card ─────────────────────────────────────────────────────────────────
 
 function StatCard({ value, label }: { value: number | string; label: string }) {
   return (
@@ -82,19 +109,19 @@ function StatCard({ value, label }: { value: number | string; label: string }) {
   );
 }
 
-// ── Main component ────────────────────────────────────────────────────────────
-
 export default function ProfilePage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [userStat, setUserStat] = useState<UserProfileStat>(initialUserStat);
-  const [tab, setTab] = useState<Tab>("bids");
+  const [tab, setTab] = useState<Tab>("active");
   const [activeAuctions, setActiveAuctions] = useState<Auction[]>([]);
   const [wonAuctions, setWonAuctions] = useState<Auction[]>([]);
+  const [favouriteAuctions, setFavouriteAuctions] = useState<Auction[]>([]);
 
   const tabData: Record<Tab, Auction[]> = {
-    bids: activeAuctions,
+    active: activeAuctions,
     won: wonAuctions,
-    favourites: FAVOURITES,
+    favourites: favouriteAuctions,
   };
 
   useEffect(() => {
@@ -110,13 +137,33 @@ export default function ProfilePage() {
           setWonAuctions(response);
         })
         .catch(console.error);
+      getActiveAuctionByCurrentUser()
+        .then((response) => {
+          console.log(response);
+          setActiveAuctions(response);
+        })
+        .catch(console.error);
+      getFavouriteAuctionsByCurrentUser()
+        .then((response) => {
+          console.log(response);
+          setFavouriteAuctions(response);
+        })
+        .catch(console.error);
     }
   }, [user]);
 
   const tabs: { key: Tab; label: string; count: number }[] = [
-    { key: "bids", label: "Active bids", count: activeAuctions.length },
-    { key: "won", label: "Won", count: wonAuctions.length },
-    { key: "favourites", label: "Favourites", count: FAVOURITES.length },
+    {
+      key: "active",
+      label: t("user.activeAuctions"),
+      count: activeAuctions.length,
+    },
+    { key: "won", label: t("user.won"), count: wonAuctions.length },
+    {
+      key: "favourites",
+      label: t("user.favorites"),
+      count: favouriteAuctions.length,
+    },
   ];
 
   return (
@@ -135,11 +182,11 @@ export default function ProfilePage() {
                     {user.username}
                   </span>
                   <span className="text-[11px] font-medium text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">
-                    Verified
+                    {t("user.verified")}
                   </span>
                 </div>
                 <p className="text-xs text-white/40 mt-0.5">
-                  {user.email} · Joined {formatDate(user.createdAt)}
+                  {user.email} · {t("user.joined")} {formatDate(user.createdAt)}
                 </p>
               </div>
             </div>
@@ -149,22 +196,24 @@ export default function ProfilePage() {
           </div>
 
           <div className="grid grid-cols-4 border-b border-white/[0.07]">
-            <StatCard value={userStat.activeListings} label="Active listings" />
+            <StatCard
+              value={userStat.activeListings}
+              label={t("user.activeListings")}
+            />
             <StatCard
               value={userStat.finishedAuctions}
-              label="Finished auctions"
+              label={t("user.finishedAuctions")}
             />
             <StatCard
               value={formatAmount(userStat.spent, "HUF")}
-              label="Total spent"
+              label={t("user.totalSpent")}
             />
             <StatCard
               value={formatAmount(userStat.earnings, "HUF")}
-              label="Total earned"
+              label={t("user.totalEarnings")}
             />
           </div>
 
-          {/* ── Tabs ─────────────────────────────────────────────────────── */}
           <div className="flex gap-1 px-6 pt-5 pb-0 border-b border-white/[0.07]">
             {tabs.map(({ key, label, count }) => (
               <button
@@ -192,7 +241,13 @@ export default function ProfilePage() {
 
           <div className="p-6 flex flex-col gap-2.5">
             {tabData[tab].map((auction) => (
-              <AuctionRow key={auction.id} auction={auction} />
+              <AuctionRow
+                key={auction.id}
+                auction={auction}
+                tab={tab}
+                user={user}
+                t={t}
+              />
             ))}
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ClockIcon from "../../icons/ClockIcon";
 import GavelIcon from "../../icons/GavelIcon";
+import { useTranslation } from "react-i18next";
 
 interface AuctionInfoProps {
   endDate: Date;
@@ -47,10 +48,12 @@ export function AuctionInfoBar({
   bidCount,
 }: AuctionInfoProps) {
   const { days, hours, minutes, seconds, ended } = useCountdown(endDate);
+  const { t } = useTranslation();
+
   const urgent = isUrgent(endDate) && !ended;
 
   const timeStr = ended
-    ? "Lejárt"
+    ? t("auction.ended")
     : days > 0
       ? `${days}n ${pad(hours)}ó ${pad(minutes)}p`
       : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
@@ -61,7 +64,7 @@ export function AuctionInfoBar({
         <GavelIcon />
         <div>
           <p className="text-[11px] uppercase tracking-wider leading-none mb-0.5">
-            Licit
+            {t("auction.bid")}
           </p>
           <p className="text-base font-bold tabular-nums leading-none">
             {currentBid.toLocaleString()}{" "}

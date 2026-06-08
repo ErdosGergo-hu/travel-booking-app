@@ -41,13 +41,13 @@ export default function Countdown({ date }: { date: string | undefined }) {
       <p className="mb-2 text-xs">{t("auction.countdown")}</p>
 
       <div className="flex items-start gap-2">
-        <TimeBlock value={pad(days)} label="DAYS" />
+        <TimeBlock value={pad(days)} label={t("countdown.days")} />
         <Separator />
-        <TimeBlock value={pad(hours)} label="HRS" />
+        <TimeBlock value={pad(hours)} label={t("countdown.hours")} />
         <Separator />
-        <TimeBlock value={pad(minutes)} label="MINS" />
+        <TimeBlock value={pad(minutes)} label={t("countdown.minutes")} />
         <Separator />
-        <TimeBlock value={pad(seconds)} label="SECS" />
+        <TimeBlock value={pad(seconds)} label={t("countdown.seconds")} />
       </div>
     </div>
   );

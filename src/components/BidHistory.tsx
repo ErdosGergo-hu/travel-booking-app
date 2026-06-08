@@ -3,10 +3,12 @@ import { getBidsByAuctionId, type Bid } from "../api/bidApi";
 import type { Auction } from "../api/auctionApi";
 import { timeAgo } from "../utils/date";
 import { formatAmount } from "../utils/number";
+import { useTranslation } from "react-i18next";
 
 export default function BidHistory({ auction }: { auction: Auction }) {
   const [bids, setBids] = useState<Bid[]>([]);
   const [expanded, setExpanded] = useState(false);
+  const { t } = useTranslation();
 
   const visibleBids = expanded ? bids : bids.slice(0, 5);
   const hasMore = bids.length > 5;
@@ -23,7 +25,7 @@ export default function BidHistory({ auction }: { auction: Auction }) {
     <div className="w-full rounded-xl max-w-xl font-sans mt-5 bg-container-background shadow-[#262626] border border-[#262626] overflow-hidden text-[#8A8A8A]">
       <div className="flex items-center justify-between p-4">
         <div>
-          <h3 className="text-xl font-bold">Bid history</h3>
+          <h3 className="text-xl font-bold">{t("bid.history")}</h3>
         </div>
       </div>
 
@@ -33,13 +35,13 @@ export default function BidHistory({ auction }: { auction: Auction }) {
           <thead>
             <tr>
               <th className="text-left text-xs font-medium px-4 py-3 uppercase tracking-wider">
-                Bidder
+                {t("bid.bidder")}
               </th>
               <th className="text-right text-xs font-medium px-4 py-3 uppercase tracking-wider">
-                Amount
+                {t("bid.amount")}
               </th>
               <th className="text-right text-xs font-medium px-4 py-3 uppercase tracking-wider">
-                Time
+                {t("bid.time")}
               </th>
             </tr>
           </thead>
@@ -76,7 +78,7 @@ export default function BidHistory({ auction }: { auction: Auction }) {
                 {/* Time */}
                 <td className="px-4 py-3 text-right">
                   <span className="font-semibold tabular-nums">
-                    {timeAgo(new Date(bid.createdAt))}
+                    {timeAgo(new Date(bid.createdAt), t)}
                   </span>
                 </td>
               </tr>

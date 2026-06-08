@@ -1,4 +1,27 @@
 {
+  "header": {
+    "dashboard": "Dashboard",
+    "auctions": "Auctions",
+    "profile": "My Profile"
+  },
+  "by": "by",
+  "countdown": {
+    "days": "DAYS",
+    "hours": "HRS",
+    "minutes": "MINS",
+    "seconds": "SECS"
+  },
+  "timeAgo": {
+    "seconds": "s ago",
+    "minutes": "m ago",
+    "hours": "h ago"
+  },
+  "bid": {
+    "history": "Bid History",
+    "bidder": "Bidder",
+    "amount": "Amount",
+    "time": "Time"
+  },
   "auction": {
     "viewDetails": "View details",
     "category": {
@@ -7,6 +30,8 @@
       "VEHICLE": "Vehicle",
       "COLLECTIBLE": "Collectible"
     },
+    "active": "Active auctions",
+    "bid": "Bid",
     "bidCount": "Number of Bids",
     "startDateTime": "Start date",
     "endDateTime": "Ends at",
@@ -14,6 +39,46 @@
     "currentPriceHuf": "Current Bid",
     "placeBid": "Place Bid",
     "newBid": "New Bid price",
-    "countdown": "Time left"
+    "ended": "Ended",
+    "endsIn": "Ends in",
+    "countdown": "Time left",
+    "error": {
+      "fetch": "Error fetching auctions",
+      "update": "Error updating auction"
+    },
+    "search": {
+      "placeholder": "Search products..."
+    },
+    "emptyRow": "No auctions found.",
+    "username": "Username",
+    "email": "Email",
+    "seller": "Seller"
+  },
+  "dashboard": {
+    "item": "Item",
+    "startBid": "Start Bid",
+    "recentBid": "Recent Bid",
+    "timeLeft": "Time Left",
+    "viewDetails": "View Details",
+    "mostPopularSellers": "Most Popular Seller",
+    "deliveries": "Deliveries",
+    "ongoing": "Ongoing",
+    "earnings": "Earnings"
+  },
+  "favorite": {
+    "error": {
+      "toggle": "Error toggling favorites"
+    }
+  },
+  "user": {
+    "verified": "Verified",
+    "joined": "Joined",
+    "activeAuctions": "Active auctions",
+    "won": "Won auctions",
+    "favorites": "Favorite",
+    "activeListings": "Active listings",
+    "finishedAuctions": "Finished auctions",
+    "totalSpent": "Total spent",
+    "totalEarnings": "Total earned"
   }
 }

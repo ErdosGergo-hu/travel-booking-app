@@ -35,7 +35,7 @@ export default function Pagination({
         <ChevronLeft />
       </button>
       <span className="text-secondary-font">
-        {page + 1} of {totalPages}
+        {page + 1} / {totalPages}
       </span>
 
       <button

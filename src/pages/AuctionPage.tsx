@@ -28,6 +28,8 @@ export default function AuctionPage() {
   const bidPlacingIsDisabled: boolean = auction?.endDateTime
     ? new Date(auction.endDateTime).getTime() - new Date().getTime() < 0
     : false;
+  const fetchErrorMessage = t("auction.error.fetch");
+  const updateErrorMessage = t("auction.error.update");
 
   useEffect(() => {
     getAuctionById(numericId)
@@ -36,8 +38,8 @@ export default function AuctionPage() {
         setNewBid(a.currentPriceHuf);
       })
       .catch((err) => {
-        console.error("Error fetching auction:", err.response?.data || err);
-        setErrorMessage("Error fetching auction");
+        console.error(fetchErrorMessage, err.response?.data || err);
+        setErrorMessage(fetchErrorMessage);
         setError(true);
       });
   }, [numericId]);
@@ -49,8 +51,8 @@ export default function AuctionPage() {
         setNewBid(a.currentPriceHuf);
       })
       .catch((err) => {
-        console.error("Error updating auction:", err.response?.data || err);
-        setErrorMessage(err.response?.data.message || "Error updating auction");
+        console.error(updateErrorMessage, err.response?.data || err);
+        setErrorMessage(err.response?.data.message || updateErrorMessage);
         setError(true);
       });
   }

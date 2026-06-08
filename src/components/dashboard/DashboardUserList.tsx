@@ -4,9 +4,11 @@ import { formatAmount } from "../../utils/number";
 import type { User } from "../../context/AuthContext";
 import { getDashboardUsers } from "../../api/userApi";
 import EmptyTableRow from "../EmptyTableRow";
+import { useTranslation } from "react-i18next";
 
 export default function DashboardUserList() {
   const [users, setUsers] = useState<User[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getDashboardUsers()
@@ -19,7 +21,7 @@ export default function DashboardUserList() {
   return (
     <div className="bg-container-background rounded-xl p-6 overflow-x-auto">
       <p className="text-sm font-medium text-[#F5F5F5] tracking-wide">
-        Most Popular Sellers
+        {t("dashboard.mostPopularSellers")}
       </p>
 
       <table className="w-full min-w-175 text-sm mt-5">
@@ -50,7 +52,9 @@ export default function DashboardUserList() {
                 <td className="py-3 text-right">
                   <div className="flex flex-col font-medium">
                     <span>{user.finishedAuctions}</span>
-                    <span className="text-[#8A8A8A]">Deliveries</span>
+                    <span className="text-[#8A8A8A]">
+                      {t("dashboard.deliveries")}
+                    </span>
                   </div>
                 </td>
 
@@ -58,7 +62,9 @@ export default function DashboardUserList() {
                 <td className="py-3 text-right">
                   <div className="flex flex-col font-medium">
                     <span>{user.activeListings}</span>
-                    <span className="text-[#8A8A8A]">Ongoing</span>
+                    <span className="text-[#8A8A8A]">
+                      {t("dashboard.ongoing")}
+                    </span>
                   </div>
                 </td>
 
@@ -66,7 +72,9 @@ export default function DashboardUserList() {
                 <td className="py-3 text-right">
                   <div className="flex flex-col font-medium">
                     <span>{formatAmount(user.earnings || 0, "HUF")}</span>
-                    <span className="text-[#8A8A8A]">Earnings</span>
+                    <span className="text-[#8A8A8A]">
+                      {t("dashboard.earnings")}
+                    </span>
                   </div>
                 </td>
 

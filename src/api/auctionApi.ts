@@ -28,6 +28,7 @@ export type Auction = {
   startingPriceHuf: number;
   currentPriceHuf: number;
   seller: User;
+  bidder: User;
   isFavorite: boolean;
 };
 
@@ -95,6 +96,18 @@ export async function updateActionByBid(
 
 export async function getWonAuctionByCurrentUser(): Promise<Auction[]> {
   const response = await api.get<Auction[]>(BASE_URL + "/me/won");
+
+  return response.data;
+}
+
+export async function getActiveAuctionByCurrentUser(): Promise<Auction[]> {
+  const response = await api.get<Auction[]>(BASE_URL + "/me/active");
+
+  return response.data;
+}
+
+export async function getFavouriteAuctionsByCurrentUser(): Promise<Auction[]> {
+  const response = await api.get<Auction[]>(BASE_URL + "/me/favorites");
 
   return response.data;
 }

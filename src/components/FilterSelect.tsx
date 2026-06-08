@@ -19,7 +19,7 @@ export default function FilterSelect({
       className={`bg-container-background h-10 shadow-md shadow-[#262626] border border-[#262626] text-secondary-font text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent hover:border-gold transition-colors cursor-pointer ${className}`}
     >
       {options.map((opt) => (
-        <option key={opt} value={opt} className="">
+        <option key={opt} value={opt}>
           {t("auction.category." + opt)}
         </option>
       ))}

@@ -76,11 +76,11 @@ function AuctionRow({
 }) {
   return (
     <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/6 bg-white/3 hover:bg-white/6 transition-colors">
-      <div className="rounded-lg overflow-hidden bg-gray-300 flex items-center justify-center">
+      <div className="rounded-lg overflow-hidden bg-[#2D2D2D] flex items-center justify-center">
         <img
           src={`/images/${auction.item.imageUrl}.png`}
           alt={auction.item.name}
-          className="w-10 h-10 object-contain bg-white"
+          className="w-10 h-10 object-contain"
         />
       </div>
       <div className="flex-1 min-w-0">
@@ -194,7 +194,7 @@ export default function ProfilePage() {
                       {t("user.verified")}
                     </span>
                     {/* TODO: add edit profile button */}
-                    <button onClick={() => navigate("/profile/edit")}>
+                    <button onClick={() => navigate("/profile/update")}>
                       <SquarePen size={16} className="text-gold" />
                     </button>
                   </div>

@@ -13,11 +13,13 @@ export async function registerRequest(
   username: string,
   email: string,
   password: string,
+  avatarUrl: string,
 ): Promise<ResponseData> {
   const response = await api.post("/auth/register", {
     username,
     email,
     password,
+    avatarUrl,
   });
 
   return response.data;

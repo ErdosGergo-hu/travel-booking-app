@@ -8,6 +8,7 @@ import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./components/auth/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import AuctionCreatePage from "./components/auction/AuctionCreatePage";
+import { ProfileUpdatePage } from "./components/auth/ProfileUpdatePage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/auction/:id" element={<AuctionPage />} />
             <Route path="/auctions/create" element={<AuctionCreatePage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/update" element={<ProfileUpdatePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
           </Routes>

@@ -92,6 +92,14 @@
     "totalSpent": "Total spent",
     "totalEarnings": "Total earned",
     "message": "Track your auction activity, bids, favorites and achievements.",
-    "createAuction": "Create Auction"
+    "createAuction": "Create Auction",
+    "signup": "Sign Up",
+    "signupMessage": "Join the marketplace to bid, sell and track your favorite auctions.",
+    "update": "Profile Update",
+    "updateMessage": "Edit your account information and avatar.",
+    "error": {
+      "passowrdMismatch": "Passwords do not match",
+      "unexpected": "Unexpected error"
+    }
   }
 }

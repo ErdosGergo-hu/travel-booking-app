@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import type { UserFormValues } from "../components/auth/UserForm";
 
 export type User = {
   id: number;
@@ -18,8 +19,10 @@ type AuthContextType = {
     username: string,
     email: string,
     password: string,
+    avatarUrl: string,
   ) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (userFormValues: UserFormValues) => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);

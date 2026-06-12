@@ -92,6 +92,14 @@
     "totalSpent": "Összesen költött",
     "totalEarnings": "Összesen keresett",
     "message": "Kövesd nyomon aukciós tevékenységed, liciteidet, kedvenceidet és eredményeidet.",
-    "createAuction": "Aukció létrehozása"
+    "createAuction": "Aukció létrehozása",
+    "signup": "Regisztráció",
+    "signupMessage": "Csatlakozz a piactérhez, hogy licitálhass, eladhass és nyomon követhesd kedvenc aukcióidat.",
+    "update": "Profil Szerkesztés",
+    "updateMessage": "Szerkeszd a felhasználód információit és avatárját",
+    "error": {
+      "passowrdMismatch": "A jelszavak nem egyeznek",
+      "unexpected": "Váratlan hiba"
+    }
   }
 }

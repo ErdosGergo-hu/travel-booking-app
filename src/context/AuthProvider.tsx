@@ -7,6 +7,8 @@ import {
   type ResponseData,
 } from "../api/authApi";
 import { api } from "../api/api";
+import type { UserFormValues } from "../components/auth/UserForm";
+import { updateProfileRequest } from "../api/userApi";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -41,17 +43,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     username: string,
     email: string,
     password: string,
+    avatarUrl: string,
   ): Promise<void> {
-    try {
-      const data: ResponseData = await registerRequest(
-        username,
-        email,
-        password,
-      );
-      setAuthInfo(data);
-    } catch (error) {
-      console.error("Registration failed: ", error);
-    }
+    const data: ResponseData = await registerRequest(
+      username,
+      email,
+      password,
+      avatarUrl,
+    );
+    setAuthInfo(data);
   }
 
   async function login(email: string, password: string): Promise<void> {
@@ -73,8 +73,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  async function updateProfile(userFormValues: UserFormValues): Promise<void> {
+    try {
+      const data = await updateProfileRequest(userFormValues);
+      console.log("Profile updated: ", data);
+      setUser(data);
+    } catch (error) {
+      console.error("Profile update failed: ", error);
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, register, updateProfile }}
+    >
       {children}
     </AuthContext.Provider>
   );
